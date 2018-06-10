@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Touchy</title>
+<meta charset="utf-8">
+<meta name="viewport" value="width=550">
+
+<link rel="stylesheet" type="text/css" href="https://davidfmiller.github.io/man/man.css">
+<style>
+</style>
+
+</head>
+<body>
+
+<div id="man">
+  <h1><a href="https://github.com/davidfmiller/touchy/" title="Touchy"><i>☝️</i>touchy</a></h1>
+
+  <p>
+    &hellip; is a simple JavaScript module for handling touch events on mobile devices.
+  </p>
+</div>
+
+<script src="build/touchy.bundle.js"></script>
+<script src="https://davidfmiller.github.io/man/man.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+
+    var touchy = new Touchy.Swipe({node : document.body, continuous: true, threshold: [100,100]});
+
+    touchy.on('move', function(delta) {
+
+      console.log('move', delta);
+
+      var threshold = 100;
+      if (Math.abs(delta[0]) > threshold || Math.abs(delta[1]) > threshold) {
+        if (delta[0] > threshold || delta[1] > threshold) {
+          console.log('next!');
+        } else {
+          console.log('prev!');
+        }
+        touchy.cancel();
+      }
+    }).on('end', function() {
+        console.log('swipe end event');
+    }).on('start', function() {
+        console.log('swipe start event');
+    }).on('cancel', function() {
+        console.log('swipe cancelled');
+    });
+
+
+    window.Man({pre: true});
+  });
+</script>
+
+</body>
+</html>
